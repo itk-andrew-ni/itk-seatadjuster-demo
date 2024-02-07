@@ -29,8 +29,20 @@ os.environ["MQTT_PORT"] = "31883"
 
 
 class RuntimeTest(unittest.TestCase):
+    def _set_env(self, runtime: str) -> None:
+        mqtt_port = 1883
+        vdb_port = 55555
+
+        if runtime == "runtime_k3d" or runtime == "runtime_local":
+            mqtt_port = 31883
+            vdb_port = 30555
+
+        os.environ["MQTT_PORT"] = f"{mqtt_port}"
+        os.environ["VDB_PORT"] = f"{vdb_port}"
+
     @parameterized.expand(["runtime_k3d", "runtime_kanto", "runtime_local"])
     def test_runtime(self, runtime):
+        self._set_env(runtime)
         subprocess.check_call(  # nosec
             [
                 "pytest",
