@@ -24,8 +24,8 @@ on:
   pull_request:
     branches:
       - main
-  schedule:
-    - cron: "0 4 * * *"
+  # schedule:
+  #   - cron: "0 4 * * *"
 
 
 jobs:
